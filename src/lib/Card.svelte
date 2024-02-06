@@ -2,19 +2,24 @@
 	export let formData;
 	let originalFormData = { ...formData };
 
-	function handleSubmit() {}
+	function handleSubmit() {
+		console.log(formData);
+		console.log(originalFormData);
+	}
+
+	let formel;
 </script>
 
 <div class="card">
 	<img src="https://picsum.photos/150" alt="Image_duu" />
-	<form on:submit|preventDefault={handleSubmit}>
+	<form on:submit|preventDefault={handleSubmit} id="formEl" bind:this={formel}>
 		<label for="name">Name:</label>
-		<input type="text" id="name" bind:value={formData.name} placeholder="Name" />
+		<input required type="text" id="name" bind:value={formData.name} placeholder="Name" />
 		<label for="description">Description:</label>
-		<input type="text" id="description" bind:value={formData.description} placeholder="Description" />
+		<input required type="text" id="description" bind:value={formData.description} placeholder="Description" />
 		<label for="price">Price:</label>
-		<input type="text" id="price" bind:value={formData.price} placeholder="Price" />
-		<button type="button" disabled={JSON.stringify(formData) === JSON.stringify(originalFormData)}>Save</button>
+		<input required type="number" inputmode="numeric" id="price" bind:value={formData.price} placeholder="Price" />
+		<button type="submit" disabled={JSON.stringify(formData) === JSON.stringify(originalFormData) || !formel.checkValidity()}>Save</button>
 	</form>
 </div>
 
@@ -66,5 +71,16 @@
 	.card form button:disabled {
 		background-color: #5c5959;
 		cursor: not-allowed;
+	}
+	/* Chrome, Safari, Edge, Opera */
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
+	/* Firefox */
+	input[type='number'] {
+		-moz-appearance: textfield;
 	}
 </style>
